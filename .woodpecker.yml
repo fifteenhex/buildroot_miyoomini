@@ -1,0 +1,37 @@
+---
+platform: linux/arm64
+
+pipeline:
+  createimage:
+    image: docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - ls -l ./
+      - ls -l /var/run/
+      - docker build -t miyoo_buildbot .
+      - chmod -R o+rw ./
+
+# Boot strap
+  bootstrap:
+    image: miyoo_buildbot
+    commands:
+      - make bootstrap
+
+## LOAD CACHE HERE !!!
+
+# DL
+  bootstrap:
+    image: miyoo_buildbot
+    commands:
+      - make buildroot-dl
+
+## SAVE CACHE HERE!!
+
+# do it!
+  build:
+    image: miyoo_buildbot
+    commands:
+      - make
+
+...
