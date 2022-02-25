@@ -18,20 +18,23 @@ pipeline:
     commands:
       - make bootstrap
 
-## LOAD CACHE HERE !!!
-
 # DL
-  bootstrap:
+  dl:
     image: miyoo_buildbot
+    volumes:
+      - /var/local/ci_cache/buildroot_dl:/var/local/ci_cache/buildroot_dl
     commands:
+      - ln -s /var/local/ci_cache/buildroot_dl dl
       - make buildroot-dl
-
-## SAVE CACHE HERE!!
 
 # do it!
   build:
     image: miyoo_buildbot
     commands:
       - make
+
+## HERE IMAGES SHOULD BE UPLOADED
+
+## xx
 
 ...
