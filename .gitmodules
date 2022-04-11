@@ -13,3 +13,6 @@
 [submodule "br2sanetime"]
 	path = br2sanetime
 	url = https://github.com/fifteenhex/br2sanetime.git
+[submodule "br2chenxing"]
+	path = br2chenxing
+	url = https://github.com/linux-chenxing/br2chenxing.git

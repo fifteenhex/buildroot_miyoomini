@@ -1,0 +1,3 @@
+config BR2_MIYOOMINI
+	bool "Miyoomini"
+	select BR2_CHENXING
