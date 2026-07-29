@@ -7,11 +7,11 @@ landed in the FAT boot partition. (Reproducibility log for the 2026-07-29
 ## What was done
 
 - `br2miyoomini/configs/miyoomini_defconfig`: re-enabled the kernel.
-  - `BR2_LINUX_KERNEL_CUSTOM_GIT` at branch `mstar_v6_5_reorder`, URL
-    `/workspace/git/linux.git` (the sandbox-local bare mirror, so the build
-    works offline). This branch is the known-good Linux 6.5 tree that boots
-    the Miyoo Mini (SSD202D) in QEMU. When it is published upstream, switch
-    the URL to `https://github.com/linux-chenxing/linux.git`.
+  - `BR2_LINUX_KERNEL_CUSTOM_GIT` at repo
+    `https://github.com/linux-chenxing/linux.git`, branch `mstar_v6_5_reorder`
+    - the known-good Linux 6.5 tree that boots the Miyoo Mini (SSD202D) in
+    QEMU. For offline builds, override the repo URL (or use
+    `LINUX_OVERRIDE_SRCDIR`) to point at a local checkout via `buildroot/local.mk`.
   - `zImage` image type, board `linux.config` as the custom kernel config,
     in-tree DTS `mstar-infinity2m-ssd202d-miyoo-mini`, DTB overlay support.
   - Re-enabled the genimage post-image step.
