@@ -1,14 +1,56 @@
 name: build
 
-# Builds the Miyoo Mini image: bootstrap the repos with vcs2l, then run the
-# buildroot build and upload the resulting images.
+# Builds the Miyoo Mini image. The work is split into two jobs so a failing
+# build never wastes the (slow) source downloads:
+#   1. fetch-sources - bootstrap the repos with vcs2l and run the Buildroot
+#      download-only target (make buildroot-dl -> make source) to populate dl/,
+#      then cache it.
+#   2. build         - restore that same dl/ cache and run the actual build.
+# The cache is written by the fetch job (independent of build success), and the
+# build job only restores it, so a broken build leaves the downloads intact for
+# the next run.
 on:
   push:
   pull_request:
   workflow_dispatch:
 
 jobs:
+  fetch-sources:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            build-essential file wget cpio unzip rsync bzip2 \
+            python3 python3-ply python3-pip \
+            flex bison bc git pkg-config libssl-dev libyaml-dev \
+            gcc-arm-linux-gnueabihf u-boot-tools
+          pip3 install vcs2l
+
+      # Cache the Buildroot download dir. The key is keyed on the vcs2l manifest
+      # and the defconfig so it invalidates when the pinned sources or the
+      # package selection change; restore-keys lets an older partial cache seed
+      # the download so only the changed sources are re-fetched.
+      - name: Cache Buildroot downloads
+        uses: actions/cache@v4
+        with:
+          path: dl
+          key: buildroot-dl-${{ hashFiles('miyoomini.repos', 'br2miyoomini/configs/miyoomini_defconfig') }}
+          restore-keys: |
+            buildroot-dl-
+
+      - name: Bootstrap (vcs2l import)
+        run: make bootstrap
+
+      - name: Download package sources
+        run: make buildroot-dl
+
   build:
+    needs: fetch-sources
     runs-on: ubuntu-latest
     timeout-minutes: 360
     steps:
@@ -24,8 +66,11 @@ jobs:
             gcc-arm-linux-gnueabihf u-boot-tools
           pip3 install vcs2l
 
-      - name: Cache Buildroot downloads
-        uses: actions/cache@v4
+      # Restore-only: reuse the dl/ cache populated by fetch-sources. A failed
+      # build must not save (and therefore must not risk clobbering) the cache,
+      # so this job never writes it.
+      - name: Restore Buildroot downloads
+        uses: actions/cache/restore@v4
         with:
           path: dl
           key: buildroot-dl-${{ hashFiles('miyoomini.repos', 'br2miyoomini/configs/miyoomini_defconfig') }}
