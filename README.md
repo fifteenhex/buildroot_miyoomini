@@ -27,5 +27,8 @@ The output lands in `buildroot/output/images`.
 
 ## Status
 
-Work in progress. The rootfs builds; the kernel and u-boot are currently
-deferred (their old config had bit-rotted) and will be brought back next.
+Work in progress. The rootfs builds, and the Linux 6.5 kernel is back: it
+builds and its FIT (`kernel.fit`) is placed in the FAT boot partition of
+`sdcard.img`. See `NOTES-kernel.md` for how the kernel is wired and how to
+reproduce/verify. u-boot is still deferred (tracked separately); the boot
+partition currently holds only the kernel FIT until u-boot is wired back in.
