@@ -1,3 +1,10 @@
 *.stamp
 *.tmp
 dl
+.venv/
+/buildroot/
+/br2secretsauce/
+/br2directfb2/
+/br2games/
+/br2sanetime/
+/br2chenxing/
