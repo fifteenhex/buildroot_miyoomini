@@ -25,3 +25,7 @@ repositories:
     type: git
     url: https://github.com/linux-chenxing/br2chenxing.git
     version: b063af72bc43abe6cc1d7b98bf337dbc56836094
+  br2dgppkg:
+    type: git
+    url: https://github.com/fifteenhex/br2dgppkg.git
+    version: c9708ae1d88c237b8cd158d685c53ca6fea880e7
