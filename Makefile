@@ -9,8 +9,7 @@ TOOLCHAIN = arm-buildroot-linux-gnueabihf_sdk-buildroot.tar.gz
 all: buildroot
 
 bootstrap.stamp:
-	git submodule init
-	git submodule update --depth=1
+	vcs import --input miyoomini.repos .
 	touch bootstrap.stamp
 
 bootstrap: bootstrap.stamp

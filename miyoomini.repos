@@ -1,0 +1,27 @@
+# vcs2l manifest (replaces the old git submodules). Populate with:
+#   vcs import --input miyoomini.repos .
+repositories:
+  buildroot:
+    type: git
+    url: https://github.com/fifteenhex/buildroot.git
+    version: b5e3fa455adcc9eaceabc30bbeb67d52c82c0841
+  br2secretsauce:
+    type: git
+    url: https://github.com/fifteenhex/br2secretsauce.git
+    version: ba74e950c5275f1aca480f75ecc19b2920b5954e
+  br2directfb2:
+    type: git
+    url: https://github.com/fifteenhex/br2directfb2.git
+    version: 0712075dae9a1e744b5d109cd3d3b5ea08be8472
+  br2games:
+    type: git
+    url: https://github.com/fifteenhex/br2games.git
+    version: c49cd20fc8768e978e918054633bc9c50dd713df
+  br2sanetime:
+    type: git
+    url: https://github.com/fifteenhex/br2sanetime.git
+    version: 217bc32687c5ffaf186beb13449138a1106d970d
+  br2chenxing:
+    type: git
+    url: https://github.com/linux-chenxing/br2chenxing.git
+    version: b063af72bc43abe6cc1d7b98bf337dbc56836094
