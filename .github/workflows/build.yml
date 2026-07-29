@@ -24,6 +24,14 @@ jobs:
             gcc-arm-linux-gnueabihf u-boot-tools
           pip3 install vcs2l
 
+      - name: Cache Buildroot downloads
+        uses: actions/cache@v4
+        with:
+          path: dl
+          key: buildroot-dl-${{ hashFiles('miyoomini.repos', 'br2miyoomini/configs/miyoomini_defconfig') }}
+          restore-keys: |
+            buildroot-dl-
+
       - name: Bootstrap (vcs2l import)
         run: make bootstrap
 
