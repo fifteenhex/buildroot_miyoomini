@@ -6,13 +6,19 @@
 
 	images {
 		kernel-0 {
+			/*
+			 * genimage copies this .its into $(BUILD_DIR)/genimage.tmp
+			 * before invoking mkimage, and dtc resolves /incbin/ paths
+			 * relative to the .its file's own directory. From
+			 * output/build/genimage.tmp that means ../../images.
+			 */
 			data = /incbin/("../../images/zImage");
 			type = "kernel";
 			arch = "arm";
 			os = "linux";
 			compression = "none";
 			load = <0x22800000>;
-                        entry = <0x22800000>;
+			entry = <0x22800000>;
 			hash-1 {
 				algo = "crc32";
 			};
@@ -36,8 +42,8 @@
 	};
 
 	configurations {
-		default = "midrived08";
-		midrived06 {
+		default = "conf-0";
+		conf-0 {
 			kernel = "kernel-0";
 			fdt = "fdt-0";
 		};
