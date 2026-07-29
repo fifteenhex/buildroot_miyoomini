@@ -28,4 +28,4 @@ repositories:
   br2dgppkg:
     type: git
     url: https://github.com/fifteenhex/br2dgppkg.git
-    version: fda632c98fcf49d25463b2f4405c2aa66ff3d870
+    version: 593731c7bbbc159eaa11a952d8006a40cfa85b8c
